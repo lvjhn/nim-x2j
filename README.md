@@ -1,5 +1,5 @@
 # nim-x2j
-A very tiny simple unbundled nim helper module for converting simple XML documents to JsonNode objects. **Everything must be wrapped in tags**. You can use a custom tag like `<raw></raw>` to represent raw portions of your XML code.
+A very tiny simple unbundled nim helper module for converting simple XML documents to JsonNode objects. **Everything must be wrapped in tags**. You can use a custom tag like `<raw>Raw Content</raw>` to represent raw portions of your XML code. This does not handle `cdata` stuff =(. You might want to write your own parser =D which is easy.
 
 The program converts the following XML representation.
 ```xml
@@ -30,4 +30,20 @@ to
     },
   }
 }
+```
+
+This is not handled.
+```xml
+<foo>
+   Hello
+  <bar>...</bar>
+</foo>  
+```
+
+Rewrite that to this
+```xml
+<foo>
+  <raw>Hello</raw>
+  <bar>..</bar>
+</foo>
 ```
