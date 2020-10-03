@@ -17,7 +17,7 @@ to
     "attrs" : {
       "attr-key" : "attr-val"
     },
-    "content" : {
+    "children" : {
       "element2-name" : {
         "attrs" : {
           "attr-key" : "attr-val",
