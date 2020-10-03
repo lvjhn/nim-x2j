@@ -19,7 +19,7 @@ proc xmlFileToJson(filename : string) : JsonNode =
     var json_obj = newJObject() 
 
     json_obj["attrs"] = newJObject() 
-    json_obj["content"] = newJObject() 
+    json_obj["children"] = newJObject() 
 
     var stack : seq[string] = @[]
     var indent : int = 0
@@ -49,11 +49,11 @@ proc xmlFileToJson(filename : string) : JsonNode =
 
                 var base = newJObject()
                 base["attrs"] = newJObject() 
-                base["content"] = newJObject() 
+                base["children"] = newJObject() 
 
                 var ref_base = base_stack[^1]
-                ref_base["content"][element_name] = base 
-                base_stack.add(ref_base["content"][element_name])
+                ref_base["children"][element_name] = base 
+                base_stack.add(ref_base["children"][element_name])
 
 
                 debug ("\t".repeat(indent - 1) & $stack)
@@ -66,11 +66,16 @@ proc xmlFileToJson(filename : string) : JsonNode =
                 debug ("\t".repeat(indent - 1) & $stack)
                 indent -= 1 
                 debug("")
+            elif kind ==  xmlCharData:
+                debug ("\t".repeat(indent - 1) & $stack)
+                let value = xml_parser.charData()
+                base_stack[^1]["attrs"]["char-data"] = newJString(value)
+                debug("")
             elif kind == xmlAttribute: 
                 let indent : string = "\t".repeat(indent - 1) & "@attr "
                 let key = xml_parser.attrKey()
                 let value = xml_parser.attrValue()
-                debug indent & key & "=" & value
+                debug (indent & key & "=" & value)
                 base_stack[^1]["attrs"][key] = newJString(value)
                 debug("")
             else: 
