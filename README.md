@@ -20,8 +20,7 @@ to
     "children" : {
       "element2-name" : {
         "attrs" : {
-          "attr-key" : "attr-val",
-          "char-data" : "Content"
+          "attr-key" : "attr-val"
         },
         "children" : {
           
